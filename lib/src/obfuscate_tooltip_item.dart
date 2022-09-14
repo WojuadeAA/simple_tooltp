@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-
 import 'package:simple_tooltip/simple_tooltip.dart';
 
 class ObfuscateTooltipItem extends StatefulWidget {
@@ -21,7 +20,8 @@ class ObfuscateTooltipItem extends StatefulWidget {
   ObfuscateTooltipItemState createState() => ObfuscateTooltipItemState();
 }
 
-class ObfuscateTooltipItemState extends State<ObfuscateTooltipItem> with WidgetsBindingObserver {
+class ObfuscateTooltipItemState extends State<ObfuscateTooltipItem>
+    with WidgetsBindingObserver {
   // LayerLink _layerLink = LayerLink();
   GlobalKey _key = GlobalKey();
 
@@ -31,8 +31,9 @@ class ObfuscateTooltipItemState extends State<ObfuscateTooltipItem> with Widgets
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addObserver(this);
-    _intervalSubscription = Stream.periodic(Duration(seconds: 1)).listen((event) {
+    WidgetsBinding.instance?.addObserver(this);
+    _intervalSubscription =
+        Stream.periodic(Duration(seconds: 1)).listen((event) {
       final currentPositionSize = getPositionAndSize();
       if (_lastPositionSize != currentPositionSize) {
         // print("Notifying change");
@@ -40,7 +41,7 @@ class ObfuscateTooltipItemState extends State<ObfuscateTooltipItem> with Widgets
       }
       _lastPositionSize = currentPositionSize;
     });
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
       _addToTooltips(widget.tooltipKeys);
     });
   }
@@ -56,7 +57,7 @@ class ObfuscateTooltipItemState extends State<ObfuscateTooltipItem> with Widgets
 
   @override
   void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
+    WidgetsBinding.instance?.removeObserver(this);
     _intervalSubscription.cancel();
     _removeFromTooltips(widget.tooltipKeys);
     super.dispose();
@@ -77,7 +78,8 @@ class ObfuscateTooltipItemState extends State<ObfuscateTooltipItem> with Widgets
 
   _PositionAndSize? getPositionAndSize() {
     if (!mounted) return null;
-    final RenderBox? renderBox = _key.currentContext?.findRenderObject() as RenderBox?;
+    final RenderBox? renderBox =
+        _key.currentContext?.findRenderObject() as RenderBox?;
     if (renderBox == null || !renderBox.attached) return null;
     final position = renderBox.localToGlobal(Offset.zero);
     return _PositionAndSize(
@@ -126,7 +128,9 @@ class _PositionAndSize {
   bool operator ==(Object o) {
     if (identical(this, o)) return true;
 
-    return o is _PositionAndSize && o.size == size && o.globalPosition == globalPosition;
+    return o is _PositionAndSize &&
+        o.size == size &&
+        o.globalPosition == globalPosition;
   }
 
   @override

@@ -103,7 +103,6 @@ class _BallonTransformation {
 
   static _BallonTransformation forAnimationValue(
       double value, TooltipDirection tooltipDirection) {
-    
     late Matrix4 transformation;
     late FractionalOffset alignment;
     if (tooltipDirection == TooltipDirection.up) {
@@ -147,7 +146,7 @@ class __OpacityAnimationWrapperState extends State<_OpacityAnimationWrapper> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
       if (mounted) {
         setState(() {
           _opacity = 1;
